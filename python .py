@@ -59,8 +59,7 @@ def pupil_detect_calibration():
         gray_eye = cv2.medianBlur(gray_eye, 1)
         ret,threshold = cv2.threshold(gray_eye,int(thresh),255, cv2.THRESH_BINARY_INV)
         cv2.imshow('threshold',threshold)
-        # cv2.imshow('eye',gray_eye)
-        # cv2.imshow('eye1',eye)
+        
 
         thresh = cv2.getTrackbarPos('threshold','pupil detect calibration')
         sens = cv2.getTrackbarPos('sensevity','pupil detect calibration')
@@ -87,22 +86,11 @@ def pupil_detect_calibration():
             cv2.destroyAllWindows()
             break
 
-# def serial():
-#     ser = serial.Serial('COM3', 9600, timeout=1)
-#     while True:
-#         A = input ("enter your command: \n")
-#         if (A=='H' or A=='h'):
-#             ser.write(b'H')
-#         elif (A=='L' or A=='l'):
-#             ser.write(b'L')
-#     ser.close()
-
 def pupil_detect_data():
     print("Pupil detect Mode\n press \'q\'  for exit  ")
     
     cv2.namedWindow("pupil detect", cv2.WINDOW_NORMAL)
     ser = serial.Serial('COM3', 9600, timeout=1)
-    # ser.write(b'1')
 
     while(True):
         ret, eye = cap.read()  # read capture
@@ -143,13 +131,7 @@ def pupil_detect_data():
         cv2.line(eye,(60,0),(60,70),(255, 255, 255),1)
         cv2.line(eye,(72,0),(72,70),(255, 255, 255),1)
         cv2.line(eye,(84,0),(84,70),(255, 255, 255),1)
-        # cv2.line(eye,(0,35),(95,35),(255, 255, 255),1)
-        #if---------------------------------------------------------
-        
-        # print("[{0},{1}]".format(cX,cY))
-        # ser = serial.Serial('COM3', 9600, timeout=1)
-        # ser.open()
-        
+   
         if (0<int(cX)<=12):
             ser.write(b'23')
             time.sleep(1)
@@ -172,16 +154,11 @@ def pupil_detect_data():
             ser.write(b'158')
             time.sleep(1)
 
-        # rows,cols,_ = eye.shape
-        # print("rows is {0} and cols is {1}" .format(rows,cols))      #Print image specifications
-        #if----------------------------------------------------------
         cv2.imshow("pupil detect", eye)
         
         if cv2.waitKey(1) & 0xFF == ord('q'):
             ser.close()
             break
-#...................................................................................................
-
 
 
 calibration()
